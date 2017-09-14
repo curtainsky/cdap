@@ -61,7 +61,7 @@ public class StandaloneAppFabricServer extends AppFabricServer {
                                    ApplicationLifecycleService applicationLifecycleService,
                                    ProgramNotificationSubscriberService programNotificationSubscriberService,
                                    ProgramLifecycleService programLifecycleService,
-                                   RunRecordCorrectorService runRecordCorrectorService,
+                                   RunFixerService runFixerService,
                                    StreamCoordinatorClient streamCoordinatorClient,
                                    @Named("appfabric.services.names") Set<String> servicesNames,
                                    @Named("appfabric.handler.hooks") Set<String> handlerHookNames,
@@ -72,7 +72,7 @@ public class StandaloneAppFabricServer extends AppFabricServer {
                                    RouteStore routeStore,
                                    CoreSchedulerService coreSchedulerService) {
     super(cConf, sConf, discoveryService, notificationService, hostname, handlers,
-          metricsCollectionService, programRuntimeService, runRecordCorrectorService, applicationLifecycleService,
+          metricsCollectionService, programRuntimeService, runFixerService, applicationLifecycleService,
           programNotificationSubscriberService, programLifecycleService, streamCoordinatorClient, servicesNames,
           handlerHookNames, namespaceAdmin, systemArtifactLoader, pluginService, null, routeStore,
           coreSchedulerService);
