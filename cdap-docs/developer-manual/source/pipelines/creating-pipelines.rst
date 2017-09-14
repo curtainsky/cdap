@@ -212,10 +212,12 @@ Two interfaces are available to create a schedule by time:
   underlying ``cron`` program. The details of that program will depend on the operating
   system used by the host of the CDAP Master process.
 
-With the CDAP Studio, you can also create a schedule that launches a CDAP Pipeline when another CDAP Pipeline
-reaches some certain statuses, and let the triggered CDAP Pipeline use properties from the triggering
-CDAP Pipeline as runtime arguments. You can also create such schedule by using :ref:`HTTP request <http-restful-api-lifecycle-schedule-add>`
-and provide the value for "triggering.properties.mapping" in schedule "properties" field as follows::
+With the CDAP Studio, you can also create a schedule that launches a pipeline when another pipeline
+reaches some certain statuses, and let the scheduled pipeline use properties from the triggering
+pipeline as runtime arguments. You can also create such schedule by using :ref:`HTTP request <http-restful-api-lifecycle-schedule-add>`.
+To specify how the properties from triggering Pipeline are used as runtime arguments in the scheduled Pipeline,
+you need to provide the stringified value of the following JSON object for the key
+"triggering.properties.mapping" in "properties" field in the schedule request body::
 
     {
       "arguments" : [
@@ -235,13 +237,48 @@ and provide the value for "triggering.properties.mapping" in schedule "propertie
       ]
     }
 
-where "arguments" is a non-empty list of runtime arguments from the triggering CDAP Pipeline
+where "arguments" is a non-empty list of runtime arguments from the triggering pipeline
 with keys specified by "source". The values of these runtime arguments are used as the values
-of the corresponding runtime arguments specified by "target" in the current CDAP Pipeline.
+of the corresponding runtime arguments specified by "target" in the scheduled pipeline.
 "pluginProperties" is a non-empty list of plugin properties from the triggering
-CDAP Pipeline, whose stages are specified by "stageName" and keys specified by "source".
+pipeline, whose stages are specified by "stageName" and keys specified by "source".
 The values of these plugin properties are used as the values of the corresponding runtime
-arguments specified by "target" in the current CDAP Pipeline.
+arguments specified by "target" in the scheduled pipeline.
+
+For example, to create a schedule called "XYSchedule" that launches a pipeline called "Y" in
+namespace "nsY" when the pipeline called "X" in namespace "nsX" completes, and use the value
+of runtime argument "output" from pipeline X as the value of runtime argument "input"
+in pipeline Y, the HTTP PUT request body will be::
+
+    {
+      "name": "ABSchedule",
+      "description": "A schedule that launches pipeline Y when pipeline X completes",
+      "namespace": "nsY",
+      "application": "Y",
+      "applicationVersion": "-SNAPSHOT",
+      "program": {
+        "programName": "SmartWorkflow",
+        "programType": "WORKFLOW"
+      },
+      "properties": {
+        "triggering.properties.mapping": "{\"arguments\":[{\"source\":\"output\",\"target\":\"input\"}],\"pluginProperties\":[]}",
+        ...
+      },
+      "constraints": [],
+      "trigger": {
+        "programId": {
+            "namespace": "nsX",
+            "application": "X",
+            "version": "-SNAPSHOT",
+            "type": "WORKFLOW",
+            "entity": "PROGRAM",
+            "program": "SmartWorkflow"
+        },
+        "programStatuses": ["COMPLETED"],
+        "type": "PROGRAM_STATUS"
+      },
+      "timeoutMillis": 86400000
+    }
 
 Engine
 ------
