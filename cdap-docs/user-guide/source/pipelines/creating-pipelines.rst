@@ -212,6 +212,37 @@ Two interfaces are available:
   underlying ``cron`` program. The details of that program will depend on the operating
   system used by the host of the CDAP Master process.
 
+With the CDAP Studio, you can also create a schedule that launches a CDAP Pipeline when another CDAP Pipeline
+reaches some certain statuses, and let the triggered CDAP Pipeline use properties from the triggering
+CDAP Pipeline as runtime arguments. You can also create such schedule by using :ref:`HTTP request <http-restful-api-lifecycle-schedule-add>`
+and provide the value for "triggering.properties.mapping" in schedule "properties" field as follows::
+
+    {
+      "arguments" : [
+        {
+          "source" : <runtime argument key in the triggering pipeline>,
+          "target" : <runtime argument key in the current pipeline>
+        },
+        ...
+      ],
+      "pluginProperties" : [
+        {
+          "stageName" : <stage name in the triggering pipeline>,
+          "source" : <plugin property key in the given stage in the triggering pipeline>,
+          "target" : <runtime argument key in the current pipeline>
+        },
+        ...
+      ]
+    }
+
+where "arguments" is a non-empty list of runtime arguments from the triggering CDAP Pipeline
+with keys specified by "source". The values of these runtime arguments are used as the values
+of the corresponding runtime arguments specified by "target" in the current CDAP Pipeline.
+"pluginProperties" is a non-empty list of plugin properties from the triggering
+CDAP Pipeline, whose stages are specified by "stageName" and keys specified by "source".
+The values of these plugin properties are used as the values of the corresponding runtime
+arguments specified by "target" in the current CDAP Pipeline.
+
 Engine
 ------
 You can specify the engine being used for a batch pipeline, either "MapReduce" (``mapreduce``)
