@@ -35,17 +35,17 @@ import java.util.concurrent.TimeUnit;
 /**
  * A distributed-mode only run record corrector service that corrects run records at a scheduled, configurable rate.
  */
-public class DistributedRunFixerService extends AbstractRunFixerService {
-  private static final Logger LOG = LoggerFactory.getLogger(DistributedRunFixerService.class);
+public class DistributedRunRecordCorrectorService extends AbstractRunRecordCorrectorService {
+  private static final Logger LOG = LoggerFactory.getLogger(DistributedRunRecordCorrectorService.class);
 
   private final CConfiguration cConf;
   private ScheduledExecutorService scheduledExecutorService;
 
   @Inject
-  public DistributedRunFixerService(CConfiguration cConf, Store store, ProgramStateWriter programStateWriter,
-                                    ProgramLifecycleService programLifecycleService,
-                                    ProgramRuntimeService runtimeService, NamespaceAdmin namespaceAdmin,
-                                    DatasetFramework datasetFramework) {
+  public DistributedRunRecordCorrectorService(CConfiguration cConf, Store store, ProgramStateWriter programStateWriter,
+                                              ProgramLifecycleService programLifecycleService,
+                                              ProgramRuntimeService runtimeService, NamespaceAdmin namespaceAdmin,
+                                              DatasetFramework datasetFramework) {
     super(cConf, store, programStateWriter, programLifecycleService, runtimeService, namespaceAdmin, datasetFramework);
     this.cConf = cConf;
   }

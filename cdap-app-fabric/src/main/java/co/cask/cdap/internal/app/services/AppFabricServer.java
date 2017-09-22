@@ -84,7 +84,7 @@ public class AppFabricServer extends AbstractIdleService {
   private final StreamCoordinatorClient streamCoordinatorClient;
   private final ProgramNotificationSubscriberService programNotificationSubscriberService;
   private final ProgramLifecycleService programLifecycleService;
-  private final RunFixerService runFixerService;
+  private final RunRecordCorrectorService runFixerService;
   private final SystemArtifactLoader systemArtifactLoader;
   private final PluginService pluginService;
   private final CoreSchedulerService coreSchedulerService;
@@ -111,7 +111,7 @@ public class AppFabricServer extends AbstractIdleService {
                          @Named(Constants.AppFabric.HANDLERS_BINDING) Set<HttpHandler> handlers,
                          @Nullable MetricsCollectionService metricsCollectionService,
                          ProgramRuntimeService programRuntimeService,
-                         RunFixerService runFixerService,
+                         RunRecordCorrectorService runFixerService,
                          ApplicationLifecycleService applicationLifecycleService,
                          ProgramNotificationSubscriberService programNotificationSubscriberService,
                          ProgramLifecycleService programLifecycleService,

@@ -22,5 +22,5 @@ import com.google.common.util.concurrent.Service;
 /**
  * A service interface that defines the behavior when run records are corrected
  */
-public interface RunFixerService extends Service {
+public interface RunRecordCorrectorService extends Service {
 }

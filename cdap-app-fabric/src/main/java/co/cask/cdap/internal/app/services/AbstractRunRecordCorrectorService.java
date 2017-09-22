@@ -32,7 +32,6 @@ import co.cask.cdap.proto.id.ProgramId;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Sets;
 import com.google.common.util.concurrent.AbstractIdleService;
-import com.google.inject.Inject;
 import org.apache.twill.api.RunId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,10 +47,10 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 /**
- * A default implementation of {@link RunFixerService}.
+ * A default implementation of {@link RunRecordCorrectorService}.
  */
-public class AbstractRunFixerService extends AbstractIdleService implements RunFixerService {
-  private static final Logger LOG = LoggerFactory.getLogger(AbstractRunFixerService.class);
+public class AbstractRunRecordCorrectorService extends AbstractIdleService implements RunRecordCorrectorService {
+  private static final Logger LOG = LoggerFactory.getLogger(AbstractRunRecordCorrectorService.class);
 
   private final Store store;
   private final ProgramStateWriter programStateWriter;
@@ -63,10 +62,10 @@ public class AbstractRunFixerService extends AbstractIdleService implements RunF
   private final DatasetFramework datasetFramework;
   private ScheduledExecutorService localDatasetDeleterService;
 
-  AbstractRunFixerService(CConfiguration cConf, Store store, ProgramStateWriter programStateWriter,
-                          ProgramLifecycleService programLifecycleService,
-                          ProgramRuntimeService runtimeService, NamespaceAdmin namespaceAdmin,
-                          DatasetFramework datasetFrameWork) {
+  AbstractRunRecordCorrectorService(CConfiguration cConf, Store store, ProgramStateWriter programStateWriter,
+                                    ProgramLifecycleService programLifecycleService,
+                                    ProgramRuntimeService runtimeService, NamespaceAdmin namespaceAdmin,
+                                    DatasetFramework datasetFrameWork) {
     this.store = store;
     this.programStateWriter = programStateWriter;
     this.programLifecycleService = programLifecycleService;

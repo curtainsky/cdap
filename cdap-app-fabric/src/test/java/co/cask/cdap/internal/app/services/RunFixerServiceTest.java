@@ -56,7 +56,7 @@ import java.util.concurrent.TimeUnit;
 
 
 /**
- * Unit test for {@link RunFixerService}
+ * Unit test for {@link RunRecordCorrectorService}
  */
 public class RunFixerServiceTest extends AppFabricTestBase {
 
@@ -144,7 +144,7 @@ public class RunFixerServiceTest extends AppFabricTestBase {
     CConfiguration testConf = CConfiguration.create();
     // set threshold to 0 so that it will actually correct the record
     testConf.set(Constants.AppFabric.PROGRAM_MAX_START_SECONDS, "0");
-    new LocalRunFixerService(testConf, store, programStateWriter, programLifecycleService,
+    new LocalRunRecordCorrectorService(testConf, store, programStateWriter, programLifecycleService,
                                        runtimeService, namespaceAdmin, datasetFramework).startUp();
 
     // Wait for the FAILED run record for the application
@@ -205,8 +205,8 @@ public class RunFixerServiceTest extends AppFabricTestBase {
     // set threshold to 0 so that it will actually correct the record
     testConf.set(Constants.AppFabric.LOCAL_DATASET_DELETER_INTERVAL_SECONDS, "1");
     testConf.set(Constants.AppFabric.LOCAL_DATASET_DELETER_INITIAL_DELAY_SECONDS, "1");
-    new LocalRunFixerService(testConf, store, programStateWriter, programLifecycleService,
-                             runtimeService, namespaceAdmin, datasetFramework).startUp();
+    new LocalRunRecordCorrectorService(testConf, store, programStateWriter, programLifecycleService,
+                                       runtimeService, namespaceAdmin, datasetFramework).startUp();
 
     // Wait for the deletion of the local dataset
     Tasks.waitFor(0, new Callable<Integer>() {

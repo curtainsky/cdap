@@ -61,7 +61,7 @@ public class StandaloneAppFabricServer extends AppFabricServer {
                                    ApplicationLifecycleService applicationLifecycleService,
                                    ProgramNotificationSubscriberService programNotificationSubscriberService,
                                    ProgramLifecycleService programLifecycleService,
-                                   RunFixerService runFixerService,
+                                   RunRecordCorrectorService runFixerService,
                                    StreamCoordinatorClient streamCoordinatorClient,
                                    @Named("appfabric.services.names") Set<String> servicesNames,
                                    @Named("appfabric.handler.hooks") Set<String> handlerHookNames,
